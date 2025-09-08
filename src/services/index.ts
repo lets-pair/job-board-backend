@@ -1,0 +1,9 @@
+export { default as authService } from './auth.service';
+export { default as userService } from './user.service';
+export { default as tokenService } from './token.service';
+export { default as emailService } from './email.service';
+export { default as userPrefsService } from './userPrefs.service';
+export { default as appointmentService } from './appointment.service';
+export { default as configService } from './config.service';
+export { default as paymentService } from './payment.service';
+export { default as blogService } from './blog.service';
