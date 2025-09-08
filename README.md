@@ -4,6 +4,54 @@ A lets pair backend/starter project for quickly building RESTful APIs using [Nod
 
 This project is an adaptation of the project [RESTful API Node Server lets pair backend](https://github.com/lets-pair/job-board-backend) using a [PostgreSQL](https://www.postgresql.org) database with [Prisma](https://www.prisma.io) ORM. Many of the files are just an adaptation to [TypeScript](https://www.typescriptlang.org) from the files of the previously mentioned project.
 
+
+## Contribution Guide
+
+Thank you for your interest in contributing! 🎉  
+Follow these steps to get started:
+
+### 1. Fork the Repository
+
+Fork the repository to your GitHub account:  
+[https://github.com/lets-pair/job-board-backend](https://github.com/lets-pair/job-board-backend)
+
+---
+
+### 2. Clone Your Fork
+
+```
+git clone https://github.com/<your-username>/<repo-name>.git
+```
+
+---
+
+### 3. Create a New Branch
+
+```
+git checkout -b feature/my-change
+```
+
+### 4. Make Changes and Commit
+
+```
+git add .
+git commit -m "Add: short description of change"
+```
+
+### 5. Push Your Branch
+
+```
+git push origin feature/my-change
+```
+
+### 6. Open a Pull Request
+
+Open a Pull Request (PR) from your fork’s branch to the main repository branch.
+We’ll review your PR, suggest any changes if needed, and then merge it.
+
+**💡 Thanks for contributing! 🙌**
+
+
 ## Quick Start
 
 Clone the repo:
