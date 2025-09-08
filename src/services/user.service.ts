@@ -26,7 +26,6 @@ const createUser = async (
       email,
       name,
       birthDay,
-      guardianEmail,
       password: await encryptPassword(password),
       role
     }
@@ -182,28 +181,6 @@ const updateUserById = async <Key extends keyof User>(
   return updatedUser as Pick<User, Key> | null;
 };
 
-const deactivateUser = async <Key extends keyof User>(
-  userId: number,
-  currentUser: User
-): Promise<Pick<User, Key> | null> => {
-  const user = await getUserById(userId, ['id', 'email', 'name']);
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-  if (currentUser.role !== 'ADMIN' && currentUser.id !== userId) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized to make this change.');
-  }
-  const updatedUser = await prisma.user.update({
-    where: {
-      id: user.id
-    },
-    data: {
-      isDisabled: true
-    }
-  });
-  return updatedUser as Pick<User, Key> | null;
-};
-
 /**
  * Delete user by id
  * @param {ObjectId} userId
@@ -214,18 +191,6 @@ const deleteUserById = async (userId: number): Promise<User> => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  // delete all user appointments
-  await prisma.appointment.deleteMany({
-    where: {
-      userId: user.id
-    }
-  });
-  // delete userPrefs
-  await prisma.userPrefs.deleteMany({
-    where: {
-      userId: user.id
-    }
-  });
   // delete user tokens
   await prisma.token.deleteMany({
     where: {
@@ -237,37 +202,11 @@ const deleteUserById = async (userId: number): Promise<User> => {
   return user;
 };
 
-const getStats = async () => {
-  const pstDate = moment.tz('America/Los_Angeles').format('DD-MM-YYYY');
-  const userCount = await prisma.user.count();
-  const appointmentCount = await prisma.appointment.count({
-    where: {
-      date: pstDate
-    }
-  });
-  const pstDateConverted = moment.tz('America/Los_Angeles').format('YYYY-MM-DD');
-  console.log(pstDateConverted);
-  const upcomingAppointmentsCount: { count: number }[] = await prisma.$queryRaw`
-  SELECT COUNT(*)::int AS count 
-  FROM "Appointment" 
-  WHERE TO_DATE("date", 'DD-MM-YYYY') > TO_DATE(${pstDateConverted}, 'YYYY-MM-DD')
-`;
-  const stats = {
-    todayAppointments: appointmentCount,
-    totalUsers: userCount,
-    upcomingAppointments: upcomingAppointmentsCount[0].count ?? 0
-  };
-
-  return stats;
-};
-
 export default {
   createUser,
   queryUsers,
   getUserById,
   getUserByEmail,
   updateUserById,
-  deleteUserById,
-  getStats,
-  deactivateUser
+  deleteUserById
 };

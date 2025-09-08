@@ -53,14 +53,10 @@ const getUserInfo = catchAsync(async (req, res) => {
     'id',
     'address',
     'birthDay',
-    'dueAmount',
     'email',
-    'guardianEmail',
-    'isConsented',
     'isEmailVerified',
     'name',
     'phoneNumber',
-    'sessionCount',
     'role'
   ]);
   if (!user) {
@@ -74,40 +70,9 @@ const updateUser = catchAsync(async (req, res) => {
   res.send(user);
 });
 
-const deactivateUser = catchAsync(async (req, res) => {
-  const currentUser = req.user as User;
-  const user = await userService.deactivateUser(req.params.userId, currentUser);
-  res.send(user);
-});
-
 const deleteUser = catchAsync(async (req, res) => {
   await userService.deleteUserById(req.params.userId);
   res.status(httpStatus.NO_CONTENT).send();
-});
-
-const imageUpload = catchAsync(async (req, res) => {
-  let data: any = '';
-  if (req.file) {
-    const url = req.file as any; // Type assertion to 'any'
-    data = url.location;
-  } else {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'File upload failed');
-  }
-  res.status(200).json({ image_link: data });
-});
-
-const documentUpload = catchAsync(async (req, res) => {
-  let data: any = '';
-  if (req.file) {
-    const url = req.file as any; // Type assertion to 'any'
-    data = url.location;
-  }
-  res.status(200).json({ document_link: data });
-});
-
-const getStats = catchAsync(async (req, res) => {
-  const stats = await userService.getStats();
-  res.status(httpStatus.OK).send(stats);
 });
 
 export default {
@@ -117,9 +82,5 @@ export default {
   updateUser,
   deleteUser,
   createAdmin,
-  imageUpload,
-  documentUpload,
-  getUserInfo,
-  getStats,
-  deactivateUser
+  getUserInfo
 };

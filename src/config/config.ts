@@ -26,13 +26,7 @@ const envVarsSchema = Joi.object()
     SMTP_USERNAME: Joi.string().description('username for email server'),
     SMTP_PASSWORD: Joi.string().description('password for email server'),
     EMAIL_FROM: Joi.string().description('the from field in the emails sent by the app'),
-    STRIPE_SECRET_KEY: Joi.string().description('The secret key for stripe'),
-    S3_BUCKET_ENDPOINT: Joi.string().description('The bucket endpoint for s3'),
-    S3_ACCESS_KEY: Joi.string().description('The access key for s3'),
-    S3_SECRET_ACCESS_KEY: Joi.string().description('The secret access key for s3'),
-    S3_BUCKET_NAME: Joi.string().description('The bucket name for s3'),
-    frontend_url: Joi.string().description('The frontend url'),
-    consent_form_url: Joi.string().description('Consent form URL')
+    frontend_url: Joi.string().description('The frontend url')
   })
   .unknown();
 
@@ -65,11 +59,5 @@ export default {
     },
     from: envVars.EMAIL_FROM
   },
-  stripeSecretKey: envVars.STRIPE_SECRET_KEY,
-  s3_bucket_endpoint: envVars.S3_BUCKET_ENDPOINT,
-  s3_access_key: envVars.S3_ACCESS_KEY,
-  s3_secret_key: envVars.S3_SECRET_ACCESS_KEY,
-  s3_bucket_name: envVars.S3_BUCKET_NAME,
-  frontend_url: envVars.FRONTEND_URL,
-  consent_form_url: envVars.CONSENT_FORM_URL
+  frontend_url: envVars.FRONTEND_URL
 };

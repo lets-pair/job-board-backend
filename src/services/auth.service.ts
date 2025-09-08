@@ -27,16 +27,9 @@ const loginUserWithEmailAndPassword = async (
     'isEmailVerified',
     'createdAt',
     'updatedAt',
-    'sessionCount',
     'address',
     'phoneNumber',
-    'totalAmount',
-    'paidAmount',
-    'dueAmount',
-    'birthDay',
-    'guardianEmail',
-    'isConsented',
-    'isDisabled'
+    'birthDay'
   ]);
   if (!user || !(await isPasswordMatch(password, user.password as string))) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');

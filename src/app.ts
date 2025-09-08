@@ -12,9 +12,6 @@ import { authLimiter } from './middlewares/rateLimiter';
 import routes from './routes/v1';
 import { errorConverter, errorHandler } from './middlewares/error';
 import ApiError from './utils/ApiError';
-import { matchingCheck } from './utils/matchingCrons';
-import { postEmailCron } from './utils/postEmailCron';
-import { morningReminderCron } from './utils/morningReminderCron';
 
 const app = express();
 
@@ -22,11 +19,6 @@ if (config.env !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
-
-// cron job to send reminders
-matchingCheck();
-postEmailCron();
-morningReminderCron();
 
 // set security HTTP headers
 app.use(helmet());

@@ -3,17 +3,8 @@ import auth from '../../middlewares/auth';
 import validate from '../../middlewares/validate';
 import { userValidation } from '../../validations';
 import { userController } from '../../controllers';
-import { uploadS3 } from '../../middlewares/s3';
 
 const router = express.Router();
-
-// For photo uploads
-router.route('/image-upload').post(auth(), uploadS3.single('photo'), userController.imageUpload);
-
-// For document uploads
-router
-  .route('/document-upload')
-  .post(auth(), uploadS3.single('document'), userController.documentUpload);
 
 router
   .route('/create-admin-xyz')
@@ -22,12 +13,6 @@ router
 router
   .route('/info/:userId')
   .get(auth(), validate(userValidation.getUserInfo), userController.getUserInfo);
-
-router.route('/stats').get(auth(), userController.getStats);
-
-router
-  .route('/deactivate/:userId')
-  .patch(auth(), validate(userValidation.deactivateUser), userController.deactivateUser);
 
 router
   .route('/')
