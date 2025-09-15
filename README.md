@@ -6,7 +6,7 @@ This project is an adaptation of the project [RESTful API Node Server lets pair 
 
 ## Quick Start
 
-Fork the Repository:
+### Fork the Repository:
 
 Fork the repository to your GitHub account:  
 [https://github.com/lets-pair/job-board-backend](https://github.com/lets-pair/job-board-backend)
