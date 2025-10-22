@@ -4,6 +4,12 @@ A lets pair backend/starter project for quickly building RESTful APIs using [Nod
 
 This project is an adaptation of the project [RESTful API Node Server lets pair backend](https://github.com/lets-pair/job-board-backend) using a [PostgreSQL](https://www.postgresql.org) database with [Prisma](https://www.prisma.io) ORM. Many of the files are just an adaptation to [TypeScript](https://www.typescriptlang.org) from the files of the previously mentioned project.
 
+## Requirements
+
+- PostgreSQL
+- Node.js
+- Git
+
 ## Quick Start
 
 ### Fork the Repository:
@@ -22,6 +28,46 @@ git clone https://github.com/<your-username>/job-board-backend.git
 cd job-board-backend
 ```
 
+
+### Download & Install Postgres:
+
+[https://www.postgresql.org/download/](https://www.postgresql.org/download/)
+
+### Create a Database
+
+You can use the **pgAdmin 4** GUI or the command line.
+
+#### Option 1: Using pgAdmin 4 (GUI)
+
+1.  Open pgAdmin 4.
+2.  In the left-hand browser, right-click on your Server (e.g., "PostgreSQL 16").
+3.  Select **Create** -> **Database...**.
+4.  Enter your new database name (e.g., `my_app_db`) and click **Save**.
+
+#### Option 2: Using the Command Line
+
+This single SQL command works on Windows (in **SQL Shell (psql)**) and macOS (in **Terminal**).
+
+1.  Open your terminal or SQL shell. On macOS/Linux, you may need to connect first by typing `psql -U postgres`. (Windows' "SQL Shell" app connects you automatically).
+2.  Run the following SQL command:
+
+    ```sql
+    CREATE DATABASE your_database_name;
+    ```
+
+3.  (Optional) You can verify it was created by listing all databases:
+    ```sql
+    \l
+    ```
+
+### Prerequisite: Install Yarn
+
+If you don't have Yarn installed, run the following command first:
+
+```bash
+npm install -g yarn
+```
+
 ### Install the dependencies:
 
 ```bash
@@ -36,11 +82,51 @@ cp .env.example .env
 # open .env and modify the environment variables (if needed)
 ```
 
-### Run the backend:
+### Configure Database Connection
+
+1.  Open the `.env` file located in the root of your project.
+2.  Find the `DATABASE_URL` variable.
+3.  Update the **username**, **password**, and **database name** to match the database you just created.
+
+    ```ini
+    # URL of the PostgreSQL database
+    DATABASE_URL=postgresql://USERNAME:PASSWORD@localhost:5432/DATABASE_NAME?schema=public
+    ```
+
+    - Replace `USERNAME` with your PostgreSQL username (e.g., `postgres`).
+    - Replace `PASSWORD` with your PostgreSQL password.
+    - Replace `DATABASE_NAME` with the name of the database you created in the previous step.
+
+### Recommended: Install Prisma VS Code Extension
+
+For syntax highlighting, auto-completion, and error checking in your `.prisma` files, install the official Prisma extension.
+
+1.  Go to the **Extensions** view in VS Code (`Ctrl+Shift+X` or `Cmd+Shift+X`).
+2.  Search for `Prisma`.
+3.  Install the extension by **Prisma**.
+
+### Generate Prisma Client
+
+This command reads your `schema.prisma` file and generates the TypeScript client based on your models.
 
 ```bash
-yarn run dev
+npx prisma generate
 ```
+
+### Run Database Migrations
+
+This command will apply your schema to the database, creating the tables and columns.
+
+```bash
+npx prisma migrate dev
+```
+
+### Start the project:
+
+```bash
+yarn dev
+```
+
 
 ## Contribution Guide
 
